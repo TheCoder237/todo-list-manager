@@ -1,14 +1,16 @@
-import time, os, random
+import time, os, random, json
 
 todo = []
-fileExist = True  # Update 
-try:  # Update 
-  f = open('todo.list', 'r')  # Auto Load
-  todo = eval(f.read())  # Make string to working code
-  f.close()
-except:  
-  fileExist = False
 
+try:  
+  with open('tasks.json', 'r') as f:
+    todo = json.load(f)
+except FileNotFoundError:  
+  todo = []
+
+def save():
+  with open('tasks.json', 'w') as f:
+    json.dump(todo,f,indent=4)
 
 def add():
   time.sleep(1)
@@ -19,6 +21,7 @@ def add():
 
   row = [task, due, priority]
   todo.append(row)
+  save()
   print("Task Successfully added")
 
 
@@ -55,6 +58,7 @@ def remove():
     if name in row:
       print(f"\n{name} has been deleted\n")
       todo.remove(row)
+      save()
 
 
 def edit():
@@ -74,6 +78,7 @@ def edit():
       elif type == '3':
         print(f"Change {row[2]} to: ")
         row[2] = input("> ")
+      save()
       print("Task updated successfully")
       break
   else:
@@ -95,23 +100,12 @@ while True:
   elif menu == '4':
     edit()
   elif menu == '5':
-    exit()
+    break
   else:
     print("Make a valid selection")
     continue
 
   time.sleep(3)
   os.system("clear")
-
-  # Update create backup folder
-  if fileExist:
-    try:
-      os.mkdir("Backups")
-    except:
-      pass
-    name = f"backup{random.randint(1,10000000000)}.txt"
-    os.popen(f"cp todo.list Backups/{name}")
   
-  f = open('todo.list', 'w')
-  f.write(str(todo))
-  f.close()
+  
