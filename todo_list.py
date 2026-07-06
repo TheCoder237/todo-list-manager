@@ -1,16 +1,19 @@
-import time, os, random, json
+import time, os, json
 
-todo = []
+tasks = []
 
-try:  
-  with open('tasks.json', 'r') as f:
-    todo = json.load(f)
-except FileNotFoundError:  
-  todo = []
+def load():
+  try:  
+    with open('tasks.json', 'r') as f:
+      return json.load(f)
+  except FileNotFoundError:  
+    return []
+
+tasks = load()
 
 def save():
   with open('tasks.json', 'w') as f:
-    json.dump(todo,f,indent=4)
+    json.dump(tasks, f, indent=4)
 
 def add():
   time.sleep(1)
@@ -24,7 +27,7 @@ def add():
     "due":due,
     "priority": priority
     }
-  todo.append(row)
+  tasks.append(row)
   save()
   print("Task Successfully added")
 
@@ -33,6 +36,10 @@ def view():
   time.sleep(1)
   os.system('clear')
 
+  if not tasks:
+    print("No tasks found")
+    return
+
   print("1: View All \n2: View Priority\n")
   
   menu = input("> ")
@@ -40,7 +47,7 @@ def view():
   if menu == '1':
     print(f"{'Task':^15} | {'Due':^15} | {'Priority':^10}")
     print("-" * 50)
-    for row in todo:
+    for row in tasks:
       print(f"{row['task']:^15} | {row['due']:^15} | {row['priority']:^10}")
     print()
   elif menu == '2':
@@ -49,7 +56,7 @@ def view():
     print(f"{'Task':^15} | {'Due':^15} | {'Priority':^10}")
     print("-" * 50)
     
-    for row in todo:
+    for row in tasks:
       if row['priority'] == priority:
         print(f"{row['task']:^15} | {row['due']:^15} | {row['priority']:^10}")
     print()
@@ -63,10 +70,10 @@ def remove():
   time.sleep(1)
   os.system("clear")
   name = input("Name of task to remove: ").lower()
-  for row in todo:
+  for row in tasks:
     if name in row['task'].lower():
       print(f"\n{name} has been deleted\n")
-      todo.remove(row)
+      tasks.remove(row)
       save()
 
 
@@ -75,7 +82,7 @@ def edit():
   os.system("clear")
   name = input("Name of task to edit: ").lower()
 
-  for row in todo:
+  for row in tasks:
     if row['task'].lower() == name:
       type = input("Edit: \n1: Name \n2: Date \n3: Priority\n")
       if type == '1':
@@ -93,28 +100,29 @@ def edit():
   else:
     print("Task Not Found")
 
+def main()
+  while True:
+    print("tasks List Management System\n")
+    print("1: Add \n2: View \n3: Remove \n4: Edit \n5: Exit \n")
 
-while True:
-  print("TODO List Management System\n")
-  print("1: Add \n2: View \n3: Remove \n4: Edit \n5: Exit \n")
+    menu = input("> ")
 
-  menu = input("> ")
+    if menu == '1':
+      add()
+    elif menu == '2':
+      view()
+    elif menu == '3':
+      remove()
+    elif menu == '4':
+      edit()
+    elif menu == '5':
+      break
+    else:
+      print("Make a valid selection")
+      continue
 
-  if menu == '1':
-    add()
-  elif menu == '2':
-    view()
-  elif menu == '3':
-    remove()
-  elif menu == '4':
-    edit()
-  elif menu == '5':
-    break
-  else:
-    print("Make a valid selection")
-    continue
-
-  time.sleep(3)
-  os.system("clear")
-  
-  
+    time.sleep(3)
+    os.system("clear")
+    
+if --__name__ == "__main__":
+  main()
