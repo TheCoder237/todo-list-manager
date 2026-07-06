@@ -1,4 +1,6 @@
-import time, os, json
+import time 
+import os
+import json
 
 tasks = []
 
@@ -75,6 +77,8 @@ def remove():
       print(f"\n{name} has been deleted\n")
       tasks.remove(row)
       save()
+      return
+  print("Task Not Found")
 
 
 def edit():
@@ -84,14 +88,14 @@ def edit():
 
   for row in tasks:
     if row['task'].lower() == name:
-      type = input("Edit: \n1: Name \n2: Date \n3: Priority\n")
-      if type == '1':
+      choice = input("Edit: \n1: Name \n2: Date \n3: Priority\n")
+      if choice == '1':
         print(f"Change {row['task']} to: ")
         row['task'] = input("> ").title()
-      elif type == '2':
+      elif choice == '2':
         print(f"Change {row['due']} to: ")
         row['due'] = input("> ")
-      elif type == '3':
+      elif choice == '3':
         print(f"Change {row['priority']} to: ")
         row['priority'] = input("> ").capitalize()
       save()
@@ -100,9 +104,9 @@ def edit():
   else:
     print("Task Not Found")
 
-def main()
+def main():
   while True:
-    print("tasks List Management System\n")
+    print("Tasks List Management System\n")
     print("1: Add \n2: View \n3: Remove \n4: Edit \n5: Exit \n")
 
     menu = input("> ")
@@ -124,5 +128,5 @@ def main()
     time.sleep(3)
     os.system("clear")
     
-if --__name__ == "__main__":
+if __name__ == "__main__":
   main()
