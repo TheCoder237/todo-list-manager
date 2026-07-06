@@ -19,7 +19,11 @@ def add():
   due = input("Due by: ")
   priority = input("Priority (low, medium, high): ").capitalize()
 
-  row = [task, due, priority]
+  row = {
+    "task": task,
+    "due":due,
+    "priority": priority
+    }
   todo.append(row)
   save()
   print("Task Successfully added")
@@ -28,23 +32,28 @@ def add():
 def view():
   time.sleep(1)
   os.system('clear')
+
   print("1: View All \n2: View Priority\n")
+  
   menu = input("> ")
 
   if menu == '1':
+    print(f"{'Task':^15} | {'Due':^15} | {'Priority':^10}")
+    print("-" * 50)
     for row in todo:
-      for item in row:
-        print(f"{item:^5}", end=" | ")
-      print()
+      print(f"{row['task']:^15} | {row['due']:^15} | {row['priority']:^10}")
     print()
   elif menu == '2':
     priority = input('See low, medium, or high priority tasks: ').capitalize()
+    
+    print(f"{'Task':^15} | {'Due':^15} | {'Priority':^10}")
+    print("-" * 50)
+    
     for row in todo:
-      if priority in row:
-        for item in row:
-          print(f"{item:^10}", end="")
-        print()
-      print()
+      if row['priority'] == priority:
+        print(f"{row['task']:^15} | {row['due']:^15} | {row['priority']:^10}")
+    print()
+      
   else:
     print("Make a valid selection")
   time.sleep(1)
@@ -55,7 +64,7 @@ def remove():
   os.system("clear")
   name = input("Name of task to remove: ").lower()
   for row in todo:
-    if name in row:
+    if name in row['task'].lower():
       print(f"\n{name} has been deleted\n")
       todo.remove(row)
       save()
@@ -67,17 +76,17 @@ def edit():
   name = input("Name of task to edit: ").lower()
 
   for row in todo:
-    if row[0] == name:
+    if row['task'].lower() == name:
       type = input("Edit: \n1: Name \n2: Date \n3: Priority\n")
       if type == '1':
-        print(f"Change {row[0]} to: ")
-        row[0] = input("> ")
+        print(f"Change {row['task']} to: ")
+        row['task'] = input("> ").title()
       elif type == '2':
-        print(f"Change {row[1]} to: ")
-        row[1] = input("> ")
+        print(f"Change {row['due']} to: ")
+        row['due'] = input("> ")
       elif type == '3':
-        print(f"Change {row[2]} to: ")
-        row[2] = input("> ")
+        print(f"Change {row['priority']} to: ")
+        row['priority'] = input("> ").capitalize()
       save()
       print("Task updated successfully")
       break
