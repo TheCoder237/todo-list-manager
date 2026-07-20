@@ -3,20 +3,23 @@ A command-line task management application built with Python. Helps users stay o
 
 # Demo
 
-## Main Menu
+### Main Menu
 ![Main Menu](images/menu.png)
 
-## Add Task
+### Add Task
 ![Add Task](images/add.png)
 
-## View Tasks
+### View Tasks
 ![View Task](images/view.png)
 
-## Edit Task
+### Edit Task
 ![Edit Task](images/edit.png)
 
-## Remove Task
+### Remove Task
 ![Remove Task](images/remove.png)
+
+## About This Project
+I built this project to get more practice with Python. My goal was to build a complete application that saves data, validates user input, and organizes the code into reusable functions. Along the way, I refactored parts of the project to make the code cleaner and easier to maintain.
 
 ## Features
 - Add task
@@ -41,6 +44,7 @@ This project helped me practice:
 1. Make sure Python 3 is installed
 2. Open a terminal in the project folder
 3. Run:
+   
 ```bash
 python todo_list.py
 ```
